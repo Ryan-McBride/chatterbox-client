@@ -155,9 +155,12 @@ var app = {
 	},
 
 	addFriend: function(){
-		$.ajax({type:'POST'})
-		return true;
+		console.log("running");
 	},
+
+	handleSubmit: function(){
+		
+	}
 
 };
 app.init();

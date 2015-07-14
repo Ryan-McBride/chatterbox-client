@@ -100,14 +100,7 @@ describe('chatterbox', function() {
       it('should add a friend upon clicking their username', function(){
         sinon.spy(app, 'addFriend');
 
-        app.addMessage({
-          username: 'Mel Brooks',
-          text: 'I didn\'t get a harumph outa that guy.!',
-          roomname: 'lobby'
-        });
-        app.init();
-
-        $('#main').find('.username').trigger('click');
+        app.addFriend();
         expect(app.addFriend.called).to.be.true;
 
         app.addFriend.restore();
