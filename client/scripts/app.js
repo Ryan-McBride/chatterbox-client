@@ -13,7 +13,7 @@ var friends = function(){
 	$('.chat').on('click', 'a', function(event){
 		app.addFriend(this.text);
 	});
-}
+};
 
 var submission = function(){
 	$('.submit').click(function() {
@@ -21,10 +21,10 @@ var submission = function(){
       	username: $('#username').val(),
       	text: $('#message').val(),
       	roomname: $('#roomname').val()
-      }
+      };
       app.addMessage(message).val();
     });
-}
+};
 
 var showFriends = function(){
 	for(var i = 0; i<app.friendsList.length; i++){
