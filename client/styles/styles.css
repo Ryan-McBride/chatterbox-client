@@ -53,10 +53,15 @@ form {
 }
 
 form input[type=text] {
-    margin-right: 10px;
-    width: 70%;
+    /*margin-right: 10px;*/
+    /*width: 70%;*/
     font-size: 12px;
-    padding: 5px;
+    /*padding: 5px;*/
+
+    max-width: 900px;
+    /*padding: 10px 190px;*/
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .chat {
@@ -70,6 +75,11 @@ form input[type=text] {
 
 .chat .username {
     font-weight: 800;
+    text-decoration: none
+}
+
+.chat .username:active {
+
 }
 
 .chat .roomname {
@@ -106,7 +116,15 @@ form input[type=text] {
     background-color: #B28dcc   ;
 }
 
+.friend{
+    font-size:30px;
+}
 
-
-
+.friend-box{
+    background-color: rgb(255, 233, 176);
+    font-weight: 800;
+}
+.friend-box:hover{
+    background-color: rgb(255, 219, 124);
+}
 

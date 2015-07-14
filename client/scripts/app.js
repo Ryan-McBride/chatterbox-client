@@ -11,9 +11,27 @@
 
 var friends = function(){
 	$('.chat').on('click', 'a', function(event){
-		app.addFriend();
+		app.addFriend(this.text);
 	});
 }
+
+var submission = function(){
+	$('.submit').click(function() {
+      var message = {
+      	username: $('#username').val(),
+      	text: $('#message').val(),
+      	roomname: $('#roomname').val()
+      }
+      app.addMessage(message).val();
+    });
+}
+
+var showFriends = function(){
+	for(var i = 0; i<app.friendsList.length; i++){
+		$('.username:contains('+ app.friendsList[i]+')').addClass('friend');
+		$('.username:contains('+ app.friendsList[i]+')').parent().addClass('friend-box');
+	}
+};
 
 $(document).ready(function(){
 
@@ -21,7 +39,10 @@ $(document).ready(function(){
 		app.init(); //function displayes new messages
 	});
 
+
+	submission();
 	friends();
+	showFriends();
 });
 
 
@@ -44,14 +65,17 @@ var message = function (){
 };
 
 var app = {
-  init : function(){
+
+	friendsList:[],
+
+  	init : function(){
     $.ajax({
       url: 'https://api.parse.com/1/classes/chatterbox',
       type: 'GET',
       contentType: 'application/json',
       success: function (data) {
 
-        for (var i = 0; i < data.results.length; i++) {
+        for (var i = data.results.length-1; i>=0; i--) {
           var id = data.results[i].objectId; //stores the users' id in a variable
 
           if($('#'+id)[0] === undefined && data.results[i].username !== undefined && data.results[i].text !== undefined ){
@@ -62,6 +86,8 @@ var app = {
             $('#'+id).append('<a href="#" class = username></a>'); //adds a p-tag for the user name
             $('#'+id).find('.username').text(data.results[i].username); //inserting clean(ie less system hackable) username text
 
+            console.log('appending from init');
+
             $('#'+id).append('<p class = message></p>'); //adds a p-tag for the message
             $('#'+id).find('.message').text(data.results[i].text);//inserting clean(ie less system hackable) username message
 
@@ -71,6 +97,8 @@ var app = {
            }
         }
        friends();
+       submission();
+       showFriends();
       },
 
       error: function (data) {
@@ -109,6 +137,7 @@ var app = {
   	},
 
   	addMessage: function(message) {
+  		console.log("BUT IS THIS RUNNING?")
  		$.ajax({
 		  // This is the url you should use to communicate with the parse API server.
 		  url: 'https://api.parse.com/1/classes/chatterbox',
@@ -117,9 +146,10 @@ var app = {
 		  contentType: 'application/json',
 		  
 		  success: function () {
+		  	app.init();
 		  	var id = 'bananaRama';
             var $node = ('<div id='+id+' class="chat"></div>'); //makes a jquery node with the id equal to the users id
-            $('#main').prepend($node); //appends the node to the DOM's body
+            $('#main').append($node); //appends the node to the DOM's body
             $('#'+id).append('<p class = username></p>'); //adds a p-tag for the user name
             $('#'+id).find('.username').text(message.username); //inserting clean(ie less system hackable) username text
 
@@ -130,6 +160,7 @@ var app = {
             $('#'+id).find('.roomname').text('room name: ' + message.roomname);//inserting clean(ie less system hackable) username message
 
 		    console.log('chatterbox: Message appended');
+		  	//app.init();
 		  	friends();
 		  },
 		  error: function (data) {
@@ -154,12 +185,21 @@ var app = {
 
 	},
 
-	addFriend: function(){
-		console.log("running");
+	addFriend: function(friend){
+		if(app.friendsList.indexOf(friend) === -1){
+			app.friendsList.push(friend);
+		}
+
+		//loop through the array,
+		//find the usernames
+		//and add class friends
+		
+		showFriends();
+		console.log('addFriend', app.friendsList);
 	},
 
-	handleSubmit: function(){
-		
+	handleSubmit: function(message){
+		console.log(message)
 	}
 
 };
