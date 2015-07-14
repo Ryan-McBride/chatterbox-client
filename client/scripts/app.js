@@ -9,10 +9,15 @@ var message = {
   	roomname: 'boom boom room'
 };
 
+
 $(document).ready(function(){
 
-	$('#refresh').on('click', function(event){
-		viewMessages();
+	$('#refresh').on('click', function(event){ //when the #refresh is clicked, this function is called
+		viewMessages(); //function displayes new messages
+	})
+
+	$('.username').on('click', 'a' ,function(event){
+		console.log(this.text);
 	})
 });
 
@@ -39,13 +44,12 @@ var viewMessages = function (parameter){
 	  type: 'GET',
 	  contentType: 'application/json',
 	  success: function (data) {
-	  
-
 
 	    for (var i = 0; i < data.results.length; i++) {
 	    	var id = data.results[i].objectId; //stores the users' id in a variable
-	  		
-	  		if($('#'+id)[0] === undefined){
+
+	  		if($('#'+id)[0] === undefined && data.results[i].username !== undefined && data.results[i].text !== undefined ){
+	  			//this if statement skips over tweets that are already populated or empty username or messages
 
 		    	var $node = ('<div id='+id+' class="chat"></div>'); //makes a jquery node with the id equal to the users id
 		    	$('#main').prepend($node); //appends the node to the DOM's body
@@ -54,6 +58,10 @@ var viewMessages = function (parameter){
 
 		    	$('#'+id).append('<p class = message></p>'); //adds a p-tag for the message
 		    	$('#'+id).find('.message').text(data.results[i].text);//inserting clean(ie less system hackable) username message
+
+		    	$('#'+id).append('<p class = roomname></p>'); //adds a p-tag for the message
+		    	$('#'+id).find('.roomname').text('room name: ' + data.results[i].roomname);//inserting clean(ie less system hackable) username message
+
 			}
 	    };
 

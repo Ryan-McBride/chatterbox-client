@@ -9,7 +9,7 @@ body {
     width: 500px;
     margin: auto;
     text-align: left;
-    background: white;
+    background: #aaa;
     padding: 50px 60px;
     border: solid #ddd;
     border-width: 0 1px 1px 1px;
@@ -63,10 +63,18 @@ form input[type=text] {
     padding: 5px;
     margin-bottom: 5px;
     background-color: #eee;
+    word-wrap: break-word;
+    border-radius: 5px;
+    box-shadow: 2px 2px 1px #888888;
 }
 
 .chat .username {
     font-weight: 800;
+}
+
+.chat .roomname {
+    font-size: 12px;
+    font-style: italic;
 }
 
 .chat:hover {
@@ -89,12 +97,13 @@ form input[type=text] {
     padding: 20px 60px;
     margin-left: auto;
     margin-right: auto;
-    background-color: #ffda99;
+    background-color: #561a7f;
     font-size: 50px;
+    color:#fff;
 }
 
 #refresh:hover{
-    background-color: #ffe8d3;
+    background-color: #B28dcc;
 }
 
 
